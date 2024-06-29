@@ -1,0 +1,19 @@
+name: Close Issue on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  closeIssue:
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged == true
+
+    steps:
+      - name: Close Issue
+        uses: peter-evans/close-issue@v2
+        with:
+          issue: ${{ github.event.pull_request.body }}
+          comment: "Issue closed automatically when the pull request was merged."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
